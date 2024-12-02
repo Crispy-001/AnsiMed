@@ -85,7 +85,7 @@
         <h2>Nivel Medio</h2>
         <iframe src="https://www.youtube.com/embed/YpmFpmz9Jr0?start=34&autoplay=1&mute=1" frameborder="0" allow="autoplay"></iframe>
         <audio controls autoplay loop>
-            <source src="https://www.soundjay.com/music/erik-satie-gymnopedie-no-1.mp3" type="audio/mp3">
+            <source src="https://www.youtube.com/watch?v=S-Xm7s9eGxU" type="audio/mp3">
             Tu navegador no soporta este audio.
         </audio>
         <button onclick="location.reload()">Volver a inicio</button>
@@ -96,8 +96,7 @@
         <h2>Nivel Alto</h2>
         <p>Realiza el ejercicio de externalización a través de los cinco sentidos.</p>
         <div id="five-senses">
-            <h3>1. ¿Qué ves?</h3>
-            <p>Describe 5 cosas que puedas ver.</p>
+            <h3>1. ¿Se puede tocar el fuego?</h3>
             <button onclick="nextSense()">Siguiente</button>
         </div>
     </div>
@@ -125,7 +124,20 @@
     <div id="mask"></div>
 
     <script>
-        let currentSense = 1;
+        let currentSense = 0;
+        const sensesQuestions = [
+            "¿Se puede tocar el fuego?",
+            "¿Se puede saborear el humo?",
+            "¿Se puede oler el agua?",
+            "¿Se puede escuchar el color azul?",
+            "¿Se puede ver el sonido de la música?",
+            "¿Se puede tocar el viento?",
+            "¿Se puede saborear el aire?",
+            "¿Se puede oler la luz?",
+            "¿Se puede escuchar una sombra?",
+            "¿Se puede ver la humedad?"
+        ];
+
         let timer;
 
         function showSection(sectionId) {
@@ -147,9 +159,12 @@
         }
 
         function nextSense() {
-            // Logic for progressing through senses
             currentSense++;
-            // Add logic to update sense content based on `currentSense`
+            if (currentSense < sensesQuestions.length) {
+                document.querySelector('#five-senses h3').textContent = sensesQuestions[currentSense];
+            } else {
+                showPopUp();
+            }
         }
 
         function showPopUp() {

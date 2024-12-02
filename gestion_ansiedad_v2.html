@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -93,7 +93,7 @@
         <h2>Nivel Alto</h2>
         <p>Realiza el ejercicio de externalización a través de los cinco sentidos.</p>
         <div id="five-senses">
-            <h3>1. ¿Se puede tocar el fuego?</h3>
+            <h3 id="sense-question">¿Se puede tocar el fuego?</h3>
             <button onclick="nextSense()">Siguiente</button>
         </div>
     </div>
@@ -131,7 +131,7 @@
         function nextSense() {
             currentSense++;
             if (currentSense < sensesQuestions.length) {
-                document.querySelector('#five-senses h3').textContent = sensesQuestions[currentSense];
+                document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
             } else {
                 showPopUp();
             }

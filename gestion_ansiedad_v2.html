@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,10 +16,7 @@
             display: none;
             margin-top: 20px;
         }
-        #low, #medium, #high, #crisis {
-            display: none;
-        }
-        video {
+        video, iframe {
             width: 300px;
             height: auto;
         }
@@ -34,6 +30,10 @@
         }
         button:hover {
             background-color: #45a049;
+        }
+        #timer {
+            font-size: 24px;
+            margin-top: 20px;
         }
         #five-senses, #pop-up {
             display: none;
@@ -72,74 +72,53 @@
     <!-- Bajo -->
     <div id="low" class="section">
         <h2>Nivel Bajo</h2>
-        <audio controls>
-            <source src="https://www.soundjay.com/nature/cascade-1.mp3" type="audio/mp3">
+        <iframe src="https://www.youtube.com/embed/I5tip6L5fOQ?start=33&autoplay=1&mute=1" frameborder="0" allow="autoplay"></iframe>
+        <audio controls autoplay loop>
+            <source src="https://www.soundjay.com/nature/rain-01.mp3" type="audio/mp3">
             Tu navegador no soporta este audio.
         </audio>
-        <p>Ejercicio de respiración: Inhala por 4 segundos, retén 4 segundos, exhala por 4 segundos.</p>
         <button onclick="location.reload()">Volver a inicio</button>
     </div>
 
     <!-- Medio -->
     <div id="medium" class="section">
         <h2>Nivel Medio</h2>
-        <p>Haz estiramientos monitorizados por el siguiente video. Mantén cada postura durante el tiempo indicado y respira cuando se te diga.</p>
-        <video controls>
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            Tu navegador no soporta este video.
-        </video>
+        <iframe src="https://www.youtube.com/embed/YpmFpmz9Jr0?start=34&autoplay=1&mute=1" frameborder="0" allow="autoplay"></iframe>
+        <audio controls autoplay loop>
+            <source src="https://www.soundjay.com/music/erik-satie-gymnopedie-no-1.mp3" type="audio/mp3">
+            Tu navegador no soporta este audio.
+        </audio>
         <button onclick="location.reload()">Volver a inicio</button>
     </div>
 
     <!-- Alto -->
     <div id="high" class="section">
         <h2>Nivel Alto</h2>
+        <p>Realiza el ejercicio de externalización a través de los cinco sentidos.</p>
         <div id="five-senses">
-            <p>Ejercicio de externalización: Usa tus cinco sentidos para relajarte.</p>
-            <div id="sense-1">
-                <h3>1. ¿Qué ves?</h3>
-                <p>Describe 5 cosas que puedas ver.</p>
-            </div>
-            <div id="sense-2" style="display:none;">
-                <h3>2. ¿Qué escuchas?</h3>
-                <p>Describe 4 cosas que puedas oír.</p>
-            </div>
-            <div id="sense-3" style="display:none;">
-                <h3>3. ¿Qué tocas?</h3>
-                <p>Describe 3 cosas que puedas tocar.</p>
-            </div>
-            <div id="sense-4" style="display:none;">
-                <h3>4. ¿Qué hueles?</h3>
-                <p>Describe 2 cosas que puedas oler.</p>
-            </div>
-            <div id="sense-5" style="display:none;">
-                <h3>5. ¿Qué saboreas?</h3>
-                <p>Describe 1 cosa que puedas saborear.</p>
-            </div>
+            <h3>1. ¿Qué ves?</h3>
+            <p>Describe 5 cosas que puedas ver.</p>
             <button onclick="nextSense()">Siguiente</button>
-            <button onclick="prevSense()">Anterior</button>
         </div>
-        <button onclick="showPopUp()">Finalizar</button>
     </div>
 
     <!-- Crisis -->
     <div id="crisis" class="section">
         <h2>Al borde de una crisis</h2>
-        <p>Aquí tienes pasos detallados para calmarte en situaciones extremas:</p>
-        <ul>
-            <li>Respira profundamente.</li>
-            <li>Cuenta hacia atrás de 10 a 1.</li>
-            <li>Visualiza un lugar seguro.</li>
-            <li>Repite frases de afirmación como "Estoy a salvo".</li>
-        </ul>
-        <button onclick="location.reload()">Volver a inicio</button>
+        <audio controls autoplay loop>
+            <source src="https://www.soundjay.com/nature/rain-02.mp3" type="audio/mp3">
+            Tu navegador no soporta este audio.
+        </audio>
+        <p>Cuenta atrás:</p>
+        <div id="timer">30</div>
+        <button onclick="startCountdown()">Iniciar cuenta atrás</button>
     </div>
 
     <!-- Pop-up -->
     <div id="pop-up">
-        <p>¿Te sientes más relajado?</p>
-        <button onclick="resetPage()">Sí</button>
-        <button onclick="askQuestion()">No</button>
+        <p>¿Te sientes mejor?</p>
+        <button onclick="location.reload()">Sí</button>
+        <button onclick="window.location.href='https://psicolink.es/'">No</button>
     </div>
 
     <!-- Máscara oscura -->
@@ -147,65 +126,35 @@
 
     <script>
         let currentSense = 1;
-        
+        let timer;
+
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
-            if (sectionId === 'high') {
-                currentSense = 1;
-                document.getElementById('five-senses').style.display = 'block';
-                showSense(currentSense);
-            }
+        }
+
+        function startCountdown() {
+            let count = 30;
+            document.getElementById('timer').textContent = count;
+            timer = setInterval(() => {
+                count--;
+                document.getElementById('timer').textContent = count;
+                if (count === 0) {
+                    clearInterval(timer);
+                    showPopUp();
+                }
+            }, 1000);
         }
 
         function nextSense() {
-            if (currentSense < 5) {
-                currentSense++;
-                showSense(currentSense);
-            }
-        }
-
-        function prevSense() {
-            if (currentSense > 1) {
-                currentSense--;
-                showSense(currentSense);
-            }
-        }
-
-        function showSense(senseNumber) {
-            document.querySelectorAll('#five-senses > div').forEach(sense => sense.style.display = 'none');
-            document.getElementById(`sense-${senseNumber}`).style.display = 'block';
+            // Logic for progressing through senses
+            currentSense++;
+            // Add logic to update sense content based on `currentSense`
         }
 
         function showPopUp() {
             document.getElementById('pop-up').style.display = 'block';
             document.getElementById('mask').style.display = 'block';
-        }
-
-        function resetPage() {
-            location.reload();
-        }
-
-        let questionIndex = 0;
-        const questions = [
-            "¿El fuego se puede tocar?",
-            "¿El agua tiene color?",
-            "¿Puedes ver el viento?",
-            "¿Las estrellas están cerca?",
-            "¿Es posible oír el silencio?"
-        ];
-
-        function askQuestion() {
-            if (questionIndex < questions.length) {
-                document.getElementById('pop-up').innerHTML = `<p>${questions[questionIndex]}</p><button onclick='resetPage()'>Sí</button><button onclick='nextQuestion()'>No</button>`;
-                questionIndex++;
-            } else {
-                document.getElementById('pop-up').innerHTML = "<p>Parece que ya has reflexionado suficiente. ¡Vuelve a intentarlo más tarde!</p><button onclick='resetPage()'>Volver a inicio</button>";
-            }
-        }
-
-        function nextQuestion() {
-            askQuestion();
         }
     </script>
 </body>

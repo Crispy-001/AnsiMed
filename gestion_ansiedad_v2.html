@@ -87,6 +87,7 @@
     <p>Identifica tu nivel de estrés</p>
 
     <button onclick="showSection('high')">Alto</button>
+    <button onclick="showSection('medium')">Medio</button>
 
     <!-- Alto -->
     <div id="high" class="section">
@@ -103,8 +104,8 @@
         <h2>Nivel Medio</h2>
         <p>Escucha el sonido para relajarte.</p>
         <iframe id="sound" width="560" height="315" 
-            src="https://www.youtube.com/embed/S-Xm7s9eGxU?autohide=1&showinfo=0" 
-            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            src="https://www.youtube.com/embed/S-Xm7s9eGxU?autohide=1&showinfo=0&controls=1" 
+            frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
     </div>
 
@@ -138,10 +139,12 @@
             document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
             // Mostrar la sección correspondiente
             document.getElementById(sectionId).style.display = 'block';
-            // Reiniciar el contador de preguntas cuando se muestre la sección
-            currentSense = 0;
-            // Asegurar que la primera pregunta se muestra
-            document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
+            
+            // Si es la sección 'high', reiniciar las preguntas
+            if (sectionId === 'high') {
+                currentSense = 0;
+                document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
+            }
         }
 
         function nextSense() {

@@ -72,18 +72,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 9;
         }
-        #five-senses {
-            margin-top: 20px;
-        }
-        #five-senses button {
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #4caf50;
-        }
-        #medium button {
-            margin-top: 20px;
-            background-color: #4caf50;
-        }
     </style>
 </head>
 <body>
@@ -95,27 +83,15 @@
     <!-- Nivel Alto -->
     <div id="high" class="section">
         <h2>Nivel Alto</h2>
+        <p>Realiza el ejercicio de externalización a través de los cinco sentidos.</p>
         <div id="five-senses">
             <h3 id="sense-question">¿Se puede tocar el fuego?</h3>
             <button onclick="nextSense()">Siguiente</button>
         </div>
     </div>
 
-    <!-- Nivel Medio (con reproducción manual del vídeo) -->
-    <div id="medium" class="section">
-        <h2>Nivel Medio</h2>
-        <p>Escucha el sonido para relajarte.</p>
-        <button onclick="playVideo()">Reproducir sonido</button>
-        <div id="video-container" style="display: none;">
-            <iframe id="sound" width="560" height="315" 
-                src="https://www.youtube.com/embed/S-Xm7s9eGxU?autohide=1&showinfo=0" 
-                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-
     <!-- Pop-up -->
-    <div id="pop-up" style="display: none;">
+    <div id="pop-up">
         <p>¿Te sientes mejor?</p>
         <button onclick="location.reload()">Sí</button>
         <button onclick="window.location.href='https://psicolink.es/'">No</button>
@@ -125,7 +101,7 @@
     <div id="mask"></div>
 
     <script>
-        let currentSense = 0;
+        let currentSense = 0;  // Asegúrate de que esto comience en 0
         const sensesQuestions = [
             "¿Se puede tocar el fuego?",
             "¿Se puede saborear el humo?",
@@ -139,37 +115,31 @@
             "¿Se puede ver la humedad?"
         ];
 
-        // Función para mostrar una sección
         function showSection(sectionId) {
+            // Ocultar todas las secciones
             document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+            // Mostrar la sección correspondiente
             document.getElementById(sectionId).style.display = 'block';
-            
-            if (sectionId === 'high') {
-                // Mostrar solo las preguntas cuando el nivel alto es seleccionado
-                currentSense = 0;
-                document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
-            }
+            // Reiniciar el contador de preguntas cuando se muestre la sección
+            currentSense = 0;
+            // Asegurar que la primera pregunta se muestra
+            document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
         }
 
-        // Función para pasar a la siguiente pregunta
         function nextSense() {
-            currentSense++;
+            currentSense++; // Avanzar al siguiente índice
             if (currentSense < sensesQuestions.length) {
+                // Actualizar la pregunta
                 document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
             } else {
+                // Mostrar el pop-up cuando se han terminado las preguntas
                 showPopUp();
             }
         }
 
-        // Función para mostrar el pop-up al finalizar
         function showPopUp() {
             document.getElementById('pop-up').style.display = 'block';
             document.getElementById('mask').style.display = 'block';
-        }
-
-        // Función para reproducir el vídeo cuando se hace clic en "Reproducir sonido"
-        function playVideo() {
-            document.getElementById('video-container').style.display = 'block';
         }
     </script>
 </body>

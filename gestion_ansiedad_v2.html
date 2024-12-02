@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de la Ansiedad</title>
+    <style><!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de la Ansiedad</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -124,15 +130,23 @@
         ];
 
         function showSection(sectionId) {
+            // Ocultar todas las secciones
             document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+            // Mostrar la sección correspondiente
             document.getElementById(sectionId).style.display = 'block';
+            // Reiniciar el contador de preguntas cuando se muestre la sección
+            currentSense = 0;
+            // Asegurar que la primera pregunta se muestra
+            document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
         }
 
         function nextSense() {
             currentSense++;
             if (currentSense < sensesQuestions.length) {
+                // Cambiar el texto de la pregunta al siguiente
                 document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
             } else {
+                // Cuando ya no hay más preguntas, mostrar el pop-up
                 showPopUp();
             }
         }

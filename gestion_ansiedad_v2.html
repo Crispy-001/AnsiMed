@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -80,6 +80,10 @@
             margin-top: 20px;
             background-color: #4caf50;
         }
+        #medium button {
+            margin-top: 20px;
+            background-color: #4caf50;
+        }
     </style>
 </head>
 <body>
@@ -87,30 +91,31 @@
     <p>Identifica tu nivel de estrés</p>
 
     <button onclick="showSection('high')">Alto</button>
-    <button onclick="showSection('medium')">Medio</button>
 
-    <!-- Alto -->
+    <!-- Nivel Alto -->
     <div id="high" class="section">
         <h2>Nivel Alto</h2>
-        <p>Realiza el ejercicio de externalización a través de los cinco sentidos.</p>
         <div id="five-senses">
             <h3 id="sense-question">¿Se puede tocar el fuego?</h3>
             <button onclick="nextSense()">Siguiente</button>
         </div>
     </div>
 
-    <!-- Video sin autoplay (nivel medio) -->
+    <!-- Nivel Medio (con reproducción manual del vídeo) -->
     <div id="medium" class="section">
         <h2>Nivel Medio</h2>
         <p>Escucha el sonido para relajarte.</p>
-        <iframe id="sound" width="560" height="315" 
-            src="https://www.youtube.com/embed/S-Xm7s9eGxU?autohide=1&showinfo=0&controls=1" 
-            frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
+        <button onclick="playVideo()">Reproducir sonido</button>
+        <div id="video-container" style="display: none;">
+            <iframe id="sound" width="560" height="315" 
+                src="https://www.youtube.com/embed/S-Xm7s9eGxU?autohide=1&showinfo=0" 
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+        </div>
     </div>
 
     <!-- Pop-up -->
-    <div id="pop-up">
+    <div id="pop-up" style="display: none;">
         <p>¿Te sientes mejor?</p>
         <button onclick="location.reload()">Sí</button>
         <button onclick="window.location.href='https://psicolink.es/'">No</button>
@@ -134,33 +139,37 @@
             "¿Se puede ver la humedad?"
         ];
 
+        // Función para mostrar una sección
         function showSection(sectionId) {
-            // Ocultar todas las secciones
             document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
-            // Mostrar la sección correspondiente
             document.getElementById(sectionId).style.display = 'block';
             
-            // Si es la sección 'high', reiniciar las preguntas
             if (sectionId === 'high') {
+                // Mostrar solo las preguntas cuando el nivel alto es seleccionado
                 currentSense = 0;
                 document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
             }
         }
 
+        // Función para pasar a la siguiente pregunta
         function nextSense() {
             currentSense++;
             if (currentSense < sensesQuestions.length) {
-                // Cambiar el texto de la pregunta al siguiente
                 document.getElementById('sense-question').textContent = sensesQuestions[currentSense];
             } else {
-                // Cuando ya no hay más preguntas, mostrar el pop-up
                 showPopUp();
             }
         }
 
+        // Función para mostrar el pop-up al finalizar
         function showPopUp() {
             document.getElementById('pop-up').style.display = 'block';
             document.getElementById('mask').style.display = 'block';
+        }
+
+        // Función para reproducir el vídeo cuando se hace clic en "Reproducir sonido"
+        function playVideo() {
+            document.getElementById('video-container').style.display = 'block';
         }
     </script>
 </body>
